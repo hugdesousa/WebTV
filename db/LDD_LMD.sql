@@ -127,20 +127,20 @@ VALUES
 
 INSERT INTO Fichier (Fichier_ID, Type, Chemin, Description, DateUpload, ThemeID, MembreID)
 VALUES
-(1, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Beyonce.png', 'Tendances technologiques 2024', '2024-01-15', 5, 1),
-(2, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\JustinBieber.png', 'Tendances technologiques 2023', '2024-01-15', 5, 1),
-(3, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\KattyPerry.png', 'Tendances technologiques 2022', '2024-01-15', 5, 1),
-(4, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Rihana.png', 'Tendances technologiques 2021', '2024-01-15', 5, 1),
+(1, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Beyonce.png', 'Beyonce ', '2024-01-15', 5, 1),
+(2, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\JustinBieber.png', 'Justin Bieber', '2024-01-15', 5, 1),
+(3, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\KattyPerry.png', 'Katy Perry', '2024-01-15', 5, 1),
+(4, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Rihana.png', 'Rihana', '2024-01-15', 5, 1),
 
-(5, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\chien.png', 'Tendances technologiques 2024', '2024-01-15', 3, 1),
-(6, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Bebe.png', 'Tendances technologiques 2023', '2024-01-15', 3, 1),
-(7, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Laugh.png', 'Tendances technologiques 2022', '2024-01-15', 3, 1),
-(8, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Fails.png', 'Tendances technologiques 2021', '2024-01-15', 3, 1),
+(5, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\chien.png', 'Chien', '2024-01-15', 3, 1),
+(6, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Bebe.png', 'Bebe', '2024-01-15', 3, 1),
+(7, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Laugh.png', 'Laugh', '2024-01-15', 3, 1),
+(8, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Fails.png', 'Fails', '2024-01-15', 3, 1),
 
-(9, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News1.png', 'Tendances technologiques 2024', '2024-01-15', 9, 1),
-(10, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News2.png', 'Tendances technologiques 2023', '2024-01-15', 9, 1),
-(11, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News3.png', 'Tendances technologiques 2022', '2024-01-15', 9, 1),
-(12, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News4.png', 'Tendances technologiques 2021', '2024-01-15', 9, 1);
+(9, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News1.png', 'News1', '2024-01-15', 9, 1),
+(10, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News2.png', 'News2', '2024-01-15', 9, 1),
+(11, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News3.png', 'News3', '2024-01-15', 9, 1),
+(12, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News4.png', 'News4', '2024-01-15', 9, 1);
 
 INSERT INTO MOTCLE (MotCleID, MotCle)
 VALUES
