@@ -5,6 +5,8 @@ from screens.home import HomePage
 from screens.login import LoginPage
 from screens.signup import SignupPage
 from screens.admin_page import AdminPage
+from screens.membre import MemberPage
+from screens.infoprofile import InfoProfile
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -14,8 +16,10 @@ class MainApp(tk.Tk):
         self.frames = {
             'HomePage': HomePage,
             'LoginPage': LoginPage,
-            'SignupPage': SignupPage
-            'AdminPage': AdminPage
+            'SignupPage': SignupPage,
+            'AdminPage': AdminPage,
+            'MemberPage': MemberPage,
+            'InfoProfile': InfoProfile
         }
 
         self.title("WebTV")
