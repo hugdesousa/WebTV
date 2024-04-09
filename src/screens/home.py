@@ -152,6 +152,7 @@ class HomePage(tk.Frame):
         # Create a dropdown menu for the user icon
         self.user_menu = tk.Menu(header, tearoff=0)
         self.user_menu.add_command(label="Profile", command=self.open_profile)
+        self.user_menu.add_command(label="Administrateur", command=self.open_administrateur)
         self.user_menu.add_command(label="Logout", command=self.logout)
 
         # Bind the click event to show the menu
@@ -162,7 +163,11 @@ class HomePage(tk.Frame):
 
     def open_profile(self):
         print("Open user profile")
-
+        
+    def open_administrateur(self):
+        print("Ouverture de la page d'administration.")
+        self.controller.switch_frame('AdminPage')
+        
     def logout(self):
         print("Logout user")
 
