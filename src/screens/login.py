@@ -49,7 +49,7 @@ class LoginPage(tk.Frame):
 
         # Rounded button for "Login"
         login_button_canvas = self.styles.create_rounded_button(self, "Login", lambda: self.validate_login())
-        login_button_canvas.grid(row=4, column=1, columnspan=2, pady=20)
+        login_button_canvas.grid(row=4, column=1, columnspan=2, pady=(0,20))
 
         # Label for "pas de compte ?" with consistent background color
         no_account_label = tk.Label(self, text="Vous n'avez pas de compte?", **self.styles.base_style)

@@ -1,5 +1,5 @@
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageFilter
 from styles import Styles
 import os
 
@@ -199,6 +199,12 @@ class HomePage(tk.Frame):
             thumb_label.image = thumb  # Keep a reference.
             thumb_label.pack()
 
+            # Bind the enter event to show the overlay and play button
+            thumb_label.bind("<Enter>", lambda e, thumb_label=thumb_label: self.show_overlay(thumb_label))
+
+            # Bind the leave event to remove the overlay and play button
+            thumb_label.bind("<Leave>", lambda e, thumb_label=thumb_label: self.hide_overlay(thumb_label))
+
             # Title
             video_title = f"Video {i+1}"  # Example title.
             title_label = tk.Label(video_frame, text=video_title, **self.styles.base_style)
@@ -209,6 +215,46 @@ class HomePage(tk.Frame):
             video_label = tk.Label(video_frame, text=video_creator, **self.styles.base_style)
             video_label.pack()
 
+    def show_overlay(self, thumb_label, thumbnail_image_path):
+        # Open the original thumbnail image
+        thumbnail = Image.open(thumbnail_image_path)
+        
+        # Apply a blur filter to the image
+        blurred_thumbnail = thumbnail.filter(ImageFilter.GaussianBlur(radius=5))
+
+        # Convert the blurred image to a format that Tkinter can use
+        blurred_photo = ImageTk.PhotoImage(blurred_thumbnail)
+
+        # Set the blurred image on the thumbnail label
+        thumb_label.configure(image=blurred_photo)
+        thumb_label.image = blurred_photo  # Keep a reference!
+
+        # Assuming 'play.png' is a 48x48 icon with a transparent background
+        play_image_path = "images/play.png"
+        play_image = Image.open(play_image_path).resize((48, 48))
+        play_photo = ImageTk.PhotoImage(play_image)
+
+        # Create a label with the play image and a transparent background
+        play_button = tk.Label(thumb_label, image=play_photo, borderwidth=0, bg='')
+        play_button.image = play_photo  # Keep a reference!
+        play_button.place(relx=0.5, rely=0.5, anchor='center')
+
+        # Bind the click event to the function that will open the video page
+        play_button.bind("<Button-1>", lambda e: self.open_video_page())
+
+    def hide_overlay(self, thumb_label, original_thumbnail_path):
+        # Restore the original thumbnail image when the mouse leaves
+        original_thumbnail = Image.open(original_thumbnail_path)
+        original_photo = ImageTk.PhotoImage(original_thumbnail)
+        thumb_label.configure(image=original_photo)
+        thumb_label.image = original_photo  # Keep a reference!
+        # Remove the play button
+        for widget in thumb_label.winfo_children():
+            widget.destroy()
+
+    def open_video_page(self):
+    # Implement the function that redirects to the video page
+        print("This will redirect to the video page")
 
     def populate_categories(self):
         # Set the weight for each category row to be expandable
