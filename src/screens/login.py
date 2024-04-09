@@ -78,6 +78,6 @@ class LoginPage(tk.Frame):
         password = self.entry_password.get()
         if username == "" and password == "":
             print("Login successful!")
-            self.controller.switch_frame('HomePage')
+            self.controller.set_login_state(True)  # This updates the login state
         else:
             print("Login failed.")
