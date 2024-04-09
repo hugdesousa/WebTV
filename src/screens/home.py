@@ -28,7 +28,22 @@ class HomePage(tk.Frame):
         self.create_logo(self.header)
         self.create_search_bar(self.header)
         self.create_buttons_frame(self.header)
-        self.create_user_icon(self.header)
+        # Conditionally create the user icon based on login state
+        if self.controller.user_logged_in:
+            self.create_user_icon(self.header)
+
+    def update_user_icon(self):
+        if self.controller.user_logged_in:
+            # If logged in, create the user icon if it doesn't already exist
+            if not hasattr(self, 'user_icon_label'):
+                self.create_user_icon(self.header)
+                self.header.grid_columnconfigure(len(self.header.grid_slaves(row=0)), weight=1)
+                self.header.grid(row=0, column=len(self.header.grid_slaves(row=0)) - 1, sticky='e')
+        else:
+            # If not logged in, destroy the user icon if it exists
+            if hasattr(self, 'user_icon_label'):
+                self.user_icon_label.destroy()
+                delattr(self, 'user_icon_label')
 
     def create_content_area(self):
         # Create the Canvas and add the Scrollbar
@@ -117,11 +132,14 @@ class HomePage(tk.Frame):
         buttons_frame = tk.Frame(header, bg=self.styles.bg_color)
         buttons_frame.grid(row=0, column=4, padx=(0, 10), pady=10, sticky='e')
 
-        btn_signup = self.styles.create_rounded_button(buttons_frame, "S'inscrire", lambda: self.controller.switch_frame('SignupPage'))
-        btn_signup.grid(row=0, column=0, padx=(0, 10))
+        # Only show the buttons if the user is not logged in
+        if not self.controller.user_logged_in:
+            btn_signup = self.styles.create_rounded_button(buttons_frame, "S'inscrire", lambda: self.controller.switch_frame('SignupPage'))
+            btn_signup.grid(row=0, column=0, padx=(0, 10))
 
-        btn_login = self.styles.create_rounded_button(buttons_frame, "Se connecter", lambda: self.controller.switch_frame('LoginPage'))
-        btn_login.grid(row=0, column=1, padx=(0, 10))
+            btn_login = self.styles.create_rounded_button(buttons_frame, "Se connecter", lambda: self.controller.switch_frame('LoginPage'))
+            btn_login.grid(row=0, column=1, padx=(0, 10))
+
 
     def create_user_icon(self, header):
         user_icon_path = os.path.join("images", "account.png")
