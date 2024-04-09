@@ -9,6 +9,7 @@ class MainApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.styles = Styles()
+        self.user_logged_in = False
         self.frames = {
             'HomePage': HomePage,
             'LoginPage': LoginPage,
@@ -23,6 +24,11 @@ class MainApp(tk.Tk):
         self.current_frame = None
         self.switch_frame('HomePage')
 
+    # updating home page
+    def set_login_state(self, state=True):
+        self.user_logged_in = state
+        self.switch_frame('HomePage')
+        
     def switch_frame(self, frame_name):
         if frame_name not in self.frames:
             raise ValueError(f"Unknown frame: {frame_name}")
