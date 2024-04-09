@@ -2,13 +2,14 @@ import os
 import sys
 import tkinter as tk
 from tkinter import font as tkfont
+from tkinter import ttk
 
 class Styles:
     def __init__(self):
-        self.bg_color = 'white'
-        self.fg_color = 'black'
-        self.button_bg_color = 'purple'
-        self.button_fg_color = 'white'
+        self.bg_color = '#ffffff'  # white background
+        self.fg_color = '#000000'  # black foreground
+        self.button_bg_color = '#a020f0'  # purple button background
+        self.button_fg_color = '#ffffff'  # white button text
         self.font_family = 'Helvetica'
         self.base_font_size = 12
 
@@ -20,16 +21,34 @@ class Styles:
         self.base_style = {'bg': self.bg_color, 'fg': self.fg_color, 'font': self.base_font}
         self.frame_style = {'bg': self.bg_color}
         self.button_style = {
-                'bg': self.button_bg_color,
-                'fg': self.button_fg_color,
-                'font': self.base_font,
-                'highlightthickness': 0,
-                'width': 100,  # Default width
+            'bg': self.button_bg_color,
+            'fg': self.button_fg_color,
+            'font': self.base_font,
+            'highlightthickness': 0,
+            'width': 100,  # Default width
                 'height': 30,  # Default height
                 'corner_radius': 10  # Default corner radius
-            }        
-        self.entry_style = {'bg': 'white', 'fg': 'black', 'font': self.base_font, 'highlightthickness': 0, 'insertbackground': self.fg_color}
-        self.search_bar_style = {'bg': 'white', 'fg': 'black', 'font': self.base_font, 'highlightthickness': 0, 'insertbackground': self.fg_color}
+        }
+        self.entry_style = {
+            'bg': self.bg_color,
+            'fg': self.fg_color,
+            'font': self.base_font,
+            'highlightthickness': 0,
+            'insertbackground': self.fg_color
+        }
+        self.search_bar_style = {
+            'bg': 'white',
+              'fg': 'black',
+                'font': self.base_font,
+                'highlightthickness': 0, 'insertbackground': self.fg_color}
+
+        # Initialize a style for ttk widgets
+        self.ttk_style = ttk.Style()
+        self.ttk_style.theme_use('classic')  # This theme does not depend on the system theme
+
+        # Configure ttk styles
+        self.ttk_style.configure('TButton', background=self.button_bg_color, foreground=self.button_fg_color)
+        self.ttk_style.configure('TEntry', fieldbackground=self.bg_color, foreground=self.fg_color)
 
     def resource_path(self, relative_path):
         base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
