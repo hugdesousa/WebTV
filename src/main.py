@@ -4,6 +4,7 @@ from styles import Styles
 from screens.home import HomePage
 from screens.login import LoginPage
 from screens.signup import SignupPage
+from screens.admin_page import AdminPage
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -14,6 +15,7 @@ class MainApp(tk.Tk):
             'HomePage': HomePage,
             'LoginPage': LoginPage,
             'SignupPage': SignupPage
+            'AdminPage': AdminPage
         }
 
         self.title("WebTV")
