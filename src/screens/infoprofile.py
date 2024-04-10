@@ -1,7 +1,10 @@
+import pydoc
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
+
+import pyodbc
 from PIL import Image, ImageTk
-from styles import Styles
+
 
 class InfoProfile(tk.Frame):
     def __init__(self, parent, styles, controller):
@@ -34,10 +37,10 @@ class InfoProfile(tk.Frame):
         entry_fields_frame.grid_columnconfigure(1, weight=1)
 
         # Create labeled entries
-        self.username_entry = self.create_labeled_entry(entry_fields_frame, 'Username', 'peter', 0)
+        self.username_entry = self.create_labeled_entry(entry_fields_frame, 'Username', 'name', 0)
         self.password_entry = self.create_labeled_entry(entry_fields_frame, 'Password', '********', 1, show='*')
-        self.email_entry = self.create_labeled_entry(entry_fields_frame, 'Email', 'peter@example.com', 2)
-        self.phone_entry = self.create_labeled_entry(entry_fields_frame, 'Telephone', '11111111111', 3)
+        self.email_entry = self.create_labeled_entry(entry_fields_frame, 'Email', 'name@example.com', 2)
+
 
         # Save and Cancel buttons
         save_button = ttk.Button(self, text="Sauvegarder", command=self.save_info, style='TButton')
@@ -57,12 +60,35 @@ class InfoProfile(tk.Frame):
         return entry_widget
 
     def save_info(self):
-        # Implement save functionality here
-        print("Save functionality not implemented.")
+        input_username=self.username_entry.get().strip()
+        input_password=self.password_entry.get().strip()
+        input_email=self.email_entry.get().strip()
+
+        server = 'localhost'
+        database = 'LDDProject'
+        username = 'SA'
+        password = 'Password123'
+
+        # Create connection string
+        conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+        user_id=1
+
+        try:
+            with pyodbc.connect(conn_str) as conn:
+                cursor = conn.cursor()
+                update_query = """UPDATE Membre
+                                  SET Pseudo = ?, MotdePasse = ?, Email = ?
+                                  WHERE Membre_ID = ?"""
+                cursor.execute(update_query, (input_username, input_password, input_email, user_id))
+                conn.commit()
+                messagebox.showinfo("Success", "Votre profil est modifie")
+        except pyodbc.Error as e:
+            messagebox.showerror("DatabaseError", f"Erreur{str(e)}")
 
     def cancel_info(self):
-        # Implement cancel functionality here
-        print("Cancel functionality not implemented.")
+        self.username_entry.delete(0,tk.END)
+        self.password_entry.delete(0,tk.END)
+        self.email_entry.delete(0,tk.END)
 
     def go_back(self):
         # Implement go back functionality here
