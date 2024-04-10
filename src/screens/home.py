@@ -162,7 +162,7 @@ class HomePage(tk.Frame):
         self.user_menu.post(event.x_root, event.y_root)
 
     def open_profile(self):
-        print("Open user profile")
+        self.controller.switch_frame('MemberPage')
         
     def open_administrateur(self):
         print("Ouverture de la page d'administration.")
