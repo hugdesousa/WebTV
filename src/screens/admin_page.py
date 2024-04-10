@@ -118,7 +118,10 @@ class AdminPage(tk.Frame):
         body_frame.pack(fill='both', expand=True)
 
         # Admin Label
-        admin_label = tk.Label(body_frame, text="Administrateur", font=self.styles.large_font)
+        admin_label = tk.Label(body_frame, text="Administrateur",
+                               font=(self.styles.font_family, 18, 'bold'),
+                               bg='white', fg='black')
+
         admin_label.pack(pady=(20, 10))
 
         # Profile Section
@@ -149,13 +152,8 @@ class AdminPage(tk.Frame):
         btn_gerer_membre = ttk.Button(buttons_frame, text="Gérer Membre", style='TButton', command=self.show_member_query_results)
         btn_gerer_membre.pack(fill='x', padx=50, pady=5)
 
-        # Button Gérer Fichier
-        btn_gerer_fichier = ttk.Button(buttons_frame, text="Gérer Fichier", style='TButton',
-                                       command=self.show_file_query_results)
-        btn_gerer_fichier.pack(fill='x', padx=50, pady=5)
-
         # Button Gérer Thème
-        btn_gerer_theme = ttk.Button(buttons_frame, text="Gérer Thème", style='TButton')
+        btn_gerer_theme = ttk.Button(buttons_frame, text="Gérer Thème", style='TButton',  command=self.show_file_query_results)
         btn_gerer_theme.pack(fill='x', padx=50, pady=5)
 
     def show_member_query_results(self):
@@ -221,4 +219,3 @@ if __name__ == "__main__":
     admin_page = AdminPage(root, styles, controller=None)
     admin_page.pack(fill='both', expand=True)
     root.mainloop()
-
