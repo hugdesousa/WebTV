@@ -1,84 +1,163 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk 
 from PIL import Image, ImageTk
+from styles import Styles
+import os
 
-class InfoProfile(tk.Frame):
+
+class AdminPage(tk.Frame):
     def __init__(self, parent, styles, controller):
-        super().__init__(parent, bg=styles.bg_color)
+        super().__init__(parent, bg=styles.base_style['bg'])
         self.styles = styles
         self.controller = controller
         self.build_ui()
 
     def build_ui(self):
-        self.grid_rowconfigure(1, weight=1)  # Center the form vertically
-        self.grid_columnconfigure(1, weight=1)  # Center the form horizontally
+        self.create_header()
+        separator = tk.Frame(self, height=40, bg=self.styles.bg_color)  
+        separator.pack(fill='x')
+        self.create_body()
+    def create_header(self):
+        self.header = tk.Frame(self, bg=self.styles.bg_color)
+        self.header.pack(fill='x')
 
-        # Back button
-        back_image = self.create_photo_image(self.styles.resource_path("images/backtrack.png"), (48, 48))
-        back_button = tk.Button(self, image=back_image, command=self.go_back, borderwidth=0, bg=self.styles.bg_color)
-        back_button.image = back_image
-        back_button.grid(row=0, column=0, padx=10, pady=10, sticky='nw')
+        self.header.grid_columnconfigure(0, weight=1)
+        self.header.grid_columnconfigure(4, weight=1)
 
-        # Title "Modification Profile"
-        title_label = tk.Label(self, text='Modification Profile', font=self.styles.large_font, bg=self.styles.bg_color)
-        title_label.grid(row=0, column=1, sticky='ew')
+        self.create_menu_icon(self.header)
+        self.create_logo(self.header)
+        self.create_search_bar(self.header)
+        self.create_user_icon(self.header)
 
-        # Entry fields frame
-        entry_fields_frame = tk.Frame(self, bg=self.styles.bg_color)
-        entry_fields_frame.grid(row=1, column=1, sticky='nsew')
+    def create_menu_icon(self, header):
+        menu_icon_path = self.styles.resource_path("images/3features.png")
+        menu_icon_img = Image.open(menu_icon_path).resize((48, 48))
+        menu_icon = ImageTk.PhotoImage(menu_icon_img)
+        menu_icon_label = tk.Label(header, image=menu_icon, bg=self.styles.bg_color)
+        menu_icon_label.image = menu_icon
+        menu_icon_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
 
-        # Configure the column with entry fields to expand
-        entry_fields_frame.grid_columnconfigure(1, weight=1)
+    def create_logo(self, header):
+        logo_path = self.styles.resource_path("images/WebTV.png")
+        logo_img = Image.open(logo_path).resize((100, 50))
+        logo = ImageTk.PhotoImage(logo_img)
+        logo_label = tk.Label(header, image=logo, bg=self.styles.bg_color, command=self.home)
+        logo_label.image = logo
+        logo_label.grid(row=0, column=1)
 
-        # Create labeled entries
-        self.username_entry = self.create_labeled_entry(entry_fields_frame, 'username', 'peter', 0)
-        self.password_entry = self.create_labeled_entry(entry_fields_frame, 'password', '********', 1, show='*')
-        self.confirm_password_entry = self.create_labeled_entry(entry_fields_frame, 'confirm password', '********', 2, show='*')
-        self.email_entry = self.create_labeled_entry(entry_fields_frame, 'email', 'peter@example.com', 3)
-        self.phone_entry = self.create_labeled_entry(entry_fields_frame, 'telephone', '11111111111', 4)
+    def create_search_bar(self, header):
+        search_frame, search_bar = self.styles.create_rounded_entry(header, **self.styles.search_bar_style)
+        search_frame.grid(row=0, column=3, padx=(0, 10), pady=10, sticky='e')
+      
+        def on_focus_in(event):
+            if search_bar.get() == "Rechercher":
+                search_bar.delete(0, tk.END)
 
-        # Save button
-        save_button = tk.Button(self, text="Sauvegarder", command=self.save_info, bg=self.styles.button_bg_color)
-        save_button.grid(row=2, column=1, pady=20, sticky='ew')
+        def on_focus_out(event):
+            if not search_bar.get():
+                search_bar.insert(0, "Rechercher")
 
-        # Cancel button
-        cancel_button = tk.Button(self, text="Annuler", command=self.cancel_info, bg=self.styles.button_bg_color)
-        cancel_button.grid(row=3, column=1, pady=10, sticky='ew')
+        search_bar.bind("<FocusIn>", on_focus_in)
+        search_bar.bind("<FocusOut>", on_focus_out)
 
-    def create_labeled_entry(self, parent, label, default_value, row, show=None):
-        # Label
-        label_widget = tk.Label(parent, text=label, anchor='w', bg=self.styles.bg_color, fg=self.styles.fg_color)
-        label_widget.grid(row=row, column=0, padx=10, sticky='w')
+        # Icons
+        search_icon_path = self.styles.resource_path("images/search.png")
+        search_icon_img = Image.open(search_icon_path).resize((20, 20))
+        search_icon = ImageTk.PhotoImage(search_icon_img)
+        search_icon_button = tk.Button(search_frame, image=search_icon, bg="white", bd=0, command=lambda: print("Search:", search_bar.get()))
+        search_icon_button.image = search_icon
+        search_icon_button.grid(row=0, column=1, padx=5)
+
+        # Clear button
+        clear_icon_path = self.styles.resource_path("images/largex.png")
+        clear_icon_img = Image.open(clear_icon_path).resize((20, 20))
+        clear_icon = ImageTk.PhotoImage(clear_icon_img)
+        clear_button = tk.Button(search_frame, image=clear_icon, bg="white", bd=0, command=lambda: search_bar.delete(0, tk.END))
+        clear_button.image = clear_icon
+        clear_button.grid(row=0, column=2)
+
+        # Initialize with placeholder text
+        search_bar.insert(0, "Rechercher")
+
+    def create_user_icon(self, header):
+        user_icon_path = os.path.join("images", "account.png")
+        user_icon_img = Image.open(user_icon_path).resize((48, 48))
+        user_icon = ImageTk.PhotoImage(user_icon_img)
+        user_icon_label = tk.Label(header, image=user_icon, bg=self.styles.bg_color)
+        user_icon_label.image = user_icon
+        user_icon_label.grid(row=0, column=5, padx=10, pady=10,sticky='e')
+
+        # Create a dropdown menu for the user icon
+        self.user_menu = tk.Menu(header, tearoff=0)
+        self.user_menu.add_command(label="Profile", command=self.open_profile)
+        self.user_menu.add_command(label="Logout", command=self.logout)
+
+        # Bind the click event to show the menu
+        user_icon_label.bind("<Button-1>", self.show_user_menu)
+
+    def show_user_menu(self, event):
+        # Post the menu at the position of the event (click position)
+        self.user_menu.post(event.x_root, event.y_root)
+
+    def open_profile(self):
+        self.controller.switch_frame('MemberPage')    # You can add more functionality as needed to open the profile page
+
+    def logout(self):
+        self.controller.set_logging_state(False)
+        self.controller.switch_frame('HomePage')   
+
+    def home(self):
+        self.controller.switch_frame('HomePage')    # You can add more functionality as needed to open the profile page
+
+    def create_body(self):
+        # Main body frame
+        body_frame = tk.Frame(self, bg=self.styles.bg_color)
+        body_frame.pack(fill='both', expand=True)
+
+        # Admin Label
+        admin_label = tk.Label(body_frame, text="Administrateur", font=self.styles.large_font)
+        admin_label.pack(pady=(20, 10))
+
+        # Profile Section
+        self.create_profile_section(body_frame)
+
+        # Management Buttons
+        self.create_management_buttons(body_frame)
+
+    def create_profile_section(self, parent):
+        # Profile picture and Admin label
+        profile_frame = tk.Frame(parent, bg=self.styles.bg_color)
+        profile_frame.pack()
         
-        # Entry
-        entry_widget = tk.Entry(parent, bg='white', fg='black', insertbackground='black', show=show)
-        entry_widget.grid(row=row, column=1, padx=10, pady=5, sticky='ew')
-        entry_widget.insert(0, default_value)
-        return entry_widget
+        image_path = self.styles.resource_path('images/account.png')
+        img = Image.open(image_path)
+        img.thumbnail((100, 100))
+        photo_img = ImageTk.PhotoImage(img)
+        profile_label = tk.Label(profile_frame, image=photo_img, bg=self.styles.bg_color)
+        profile_label.image = photo_img  
+        profile_label.pack(pady=10)
 
-    def save_info(self):
-        # Implement save functionality here
-        messagebox.showinfo("Info", "Save functionality not implemented.")
+    def create_management_buttons(self, parent):
+        # Buttons for managing the admin tasks
+        buttons_frame = tk.Frame(parent, bg=self.styles.bg_color)
+        buttons_frame.pack()
 
-    def cancel_info(self):
-        # Implement cancel functionality here
-        messagebox.showinfo("Info", "Cancel functionality not implemented.")
+        # Button Gérer Membre
+        btn_gerer_membre = ttk.Button(buttons_frame, text="Gérer Membre", style='TButton')
+        btn_gerer_membre.pack(fill='x', padx=50, pady=5)
 
-    def go_back(self):
-        if self.controller:
-            self.controller.switch_frame('MemberPage')  # Replace 'MemberPage' with your actual frame name for back navigation
-        else:
-            messagebox.showinfo("Back", "No controller to handle the back operation.")
+        # Button Gérer Fichier
+        btn_gerer_fichier = ttk.Button(buttons_frame, text="Gérer Fichier", style='TButton')
+        btn_gerer_fichier.pack(fill='x', padx=50, pady=5)
 
-    def create_photo_image(self, path, size):
-        img = Image.open(path).resize(size)
-        return ImageTk.PhotoImage(img)
-
-
+        # Button Gérer Thème
+        btn_gerer_theme = ttk.Button(buttons_frame, text="Gérer Thème", style='TButton')
+        btn_gerer_theme.pack(fill='x', padx=50, pady=5)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    profile = InfoProfile(root)
-    profile.pack(fill='both', expand=True)
+    root.title("Administration")
+    styles = Styles()  
+    admin_page = AdminPage(root, styles, controller=None)
+    admin_page.pack(fill='both', expand=True)
     root.mainloop()
-
