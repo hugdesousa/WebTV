@@ -99,7 +99,7 @@ class LoginPage(tk.Frame):
 
             if cursor.fetchone():
                 print("Login successful!")
-                self.controller.switch_frame('HomePage')  # Assuming this is the method to switch to the HomePage
+                self.controller.set_login_state(True)
             else:
                 messagebox.showerror("Data Error","Connexion echoue, Pseudo ou Utilisateur invalide")
 
