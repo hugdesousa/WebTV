@@ -142,6 +142,9 @@ class DisplayVideo(tk.Frame):
 
     def open_profile(self):
         self.controller.switch_frame('MemberPage')
+
+    def home(self):
+        self.controller.switch_frame('HomePage')
         
     def open_administrateur(self):
         print("Ouverture de la page d'administration.")
