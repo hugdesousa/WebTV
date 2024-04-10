@@ -8,6 +8,7 @@ from screens.admin_page import AdminPage
 from screens.membre import MemberPage
 from screens.infoprofile import InfoProfile
 from screens.likedctgs import LikedCtgs
+from screens.displayvideo import DisplayVideo
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -21,7 +22,9 @@ class MainApp(tk.Tk):
             'AdminPage': AdminPage,
             'MemberPage': MemberPage,
             'InfoProfile': InfoProfile,
-            'LikedCtgs': LikedCtgs
+            'LikedCtgs': LikedCtgs,
+            'DisplayVideo': DisplayVideo
+
         }
 
         self.title("WebTV")
