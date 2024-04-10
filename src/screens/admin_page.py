@@ -41,9 +41,10 @@ class AdminPage(tk.Frame):
         logo_path = self.styles.resource_path("images/WebTV.png")
         logo_img = Image.open(logo_path).resize((100, 50))
         logo = ImageTk.PhotoImage(logo_img)
-        logo_label = tk.Label(header, image=logo, bg=self.styles.bg_color, command=self.home)
-        logo_label.image = logo
-        logo_label.grid(row=0, column=1)
+        logo_button = tk.Button(header, image=logo, bg=self.styles.bg_color, command=self.home)
+        logo_button.image = logo
+        logo_button.grid(row=0, column=1)
+
 
     def create_search_bar(self, header):
         search_frame, search_bar = self.styles.create_rounded_entry(header, **self.styles.search_bar_style)
