@@ -1,4 +1,7 @@
 import tkinter as tk
+from tkinter import messagebox
+
+import pyodbc
 from PIL import Image, ImageTk, ImageFilter
 from styles import Styles
 import os
@@ -112,7 +115,8 @@ class HomePage(tk.Frame):
         search_icon_path = self.styles.resource_path("images/search.png")
         search_icon_img = Image.open(search_icon_path).resize((20, 20))
         search_icon = ImageTk.PhotoImage(search_icon_img)
-        search_icon_button = tk.Button(search_frame, image=search_icon, bg="white", bd=0, command=lambda: print("Search:", search_bar.get()))
+        search_icon_button = tk.Button(search_frame, image=search_icon, bg="white", bd=0, command=self.execute_search)
+        self.search_bar = search_bar
         search_icon_button.image = search_icon
         search_icon_button.grid(row=0, column=1, padx=5)
 
@@ -127,6 +131,73 @@ class HomePage(tk.Frame):
         # Initialize with placeholder text
         search_bar.insert(0, "Rechercher")
 
+    def execute_search(self):
+        search_query = self.search_bar.get().strip()
+        server = 'localhost'
+        database = 'LDDProject'
+        username = 'SA'
+        password = 'Password123'
+
+        # Create connection string
+        conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+        if not search_query:
+            messagebox.showinfo("Search", "Veuillez entrer un terme de recherche.")
+            return
+
+        # Connect to the database and execute search query
+        try:
+            conn = pyodbc.connect(conn_str)
+            cursor = conn.cursor()
+            # Utilisation de la nouvelle requête pour rechercher par mot-clé
+            cursor.execute("""
+                SELECT F.Chemin,F.Description FROM Fichier F
+                JOIN MotsIndexFichier MIF ON F.Fichier_ID = MIF.Fichier_ID
+                JOIN MOTCLE MK ON MIF.MotCleID = MK.MotCleID
+                WHERE MK.MotCle LIKE ?
+            """, ('%' + search_query + '%',))
+            results = cursor.fetchall()
+            self.display_search_results(results)
+        except pyodbc.Error as e:
+            messagebox.showerror("Erreur de base de données", str(e))
+        finally:
+            if conn:
+                conn.close()
+
+    def display_search_results(self, results):
+        # First, clear the existing content in the content_frame
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+
+        if not results:
+            # If no results, display a message saying so
+            no_results_label = tk.Label(self.content_frame, text="No results found.", bg=self.styles.bg_color)
+            no_results_label.pack(pady=20)
+            return
+
+        # Loop through the results, which are expected to contain file paths and descriptions
+        for idx, (chemin, video_description) in enumerate(results):
+            # Create a frame for each result to organize its display
+            result_frame = tk.Frame(self.content_frame, bg=self.styles.bg_color)
+            result_frame.pack(fill='x', padx=10, pady=5)
+
+            if os.path.isfile(chemin):
+                # Load the image, resizing as needed
+                image = Image.open(chemin)
+                image = image.resize((150, 100))  # Resize as per your UI needs
+                photo = ImageTk.PhotoImage(image)
+
+                # Display the image in a label
+                image_label = tk.Label(result_frame, image=photo, bg=self.styles.bg_color)
+                image_label.image = photo  # Keep a reference
+                image_label.pack(side='left', padx=10)  # Adjust layout as needed
+
+            # Display the video description
+            description_label = tk.Label(result_frame, text=f"{idx + 1}. {video_description}", bg=self.styles.bg_color,
+                                         font=self.styles.small_font)
+            description_label.pack(side='left', anchor='n', padx=10)  # Adjust layout as needed
+
+            # This ensures each frame containing the result is visually separated
+            tk.Frame(self.content_frame, height=2, bg="grey", bd=1).pack(fill='x', padx=5, pady=5)
 
     def create_buttons_frame(self, header):
         buttons_frame = tk.Frame(header, bg=self.styles.bg_color)
@@ -305,6 +376,9 @@ if __name__ == "__main__":
     # Set the initial size of the window to be half the size of the screen
     root.geometry(f'{window_width}x{window_height}')
     
+    app = HomePage(root, styles, controller=None)
+    app.pack(fill='both', expand=True)
+    root.mainloop()
     app = HomePage(root, styles, controller=None)
     app.pack(fill='both', expand=True)
     root.mainloop()
