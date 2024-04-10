@@ -94,3 +94,8 @@ SELECT F.Chemin,F.Description FROM Fichier F
 JOIN MotsIndexFichier MIF ON F.Fichier_ID = MIF.Fichier_ID
 JOIN MOTCLE MK ON MIF.MotCleID = MK.MotCleID
 WHERE MK.MotCle LIKE '%Musique%'
+
+--Permet de Update le nom prenom et email adress de l utilisateur
+UPDATE Membre
+SET Pseudo = "Username", MotdePasse = "newPassword", Email = "email"
+WHERE Membre_ID = ?
