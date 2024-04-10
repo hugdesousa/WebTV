@@ -7,6 +7,7 @@ from screens.signup import SignupPage
 from screens.admin_page import AdminPage
 from screens.membre import MemberPage
 from screens.infoprofile import InfoProfile
+from screens.likedctgs import LikedCtgs
 
 class MainApp(tk.Tk):
     def __init__(self):
