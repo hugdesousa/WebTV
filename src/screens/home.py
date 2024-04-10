@@ -308,3 +308,4 @@ if __name__ == "__main__":
     app = HomePage(root, styles, controller=None)
     app.pack(fill='both', expand=True)
     root.mainloop()
+
