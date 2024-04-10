@@ -41,7 +41,7 @@ class AdminPage(tk.Frame):
         logo_path = self.styles.resource_path("images/WebTV.png")
         logo_img = Image.open(logo_path).resize((100, 50))
         logo = ImageTk.PhotoImage(logo_img)
-        logo_label = tk.Label(header, image=logo, bg=self.styles.bg_color)
+        logo_label = tk.Label(header, image=logo, bg=self.styles.bg_color, command=self.home)
         logo_label.image = logo
         logo_label.grid(row=0, column=1)
 
@@ -79,8 +79,6 @@ class AdminPage(tk.Frame):
         # Initialize with placeholder text
         search_bar.insert(0, "Rechercher")
 
-
-
     def create_user_icon(self, header):
         user_icon_path = os.path.join("images", "account.png")
         user_icon_img = Image.open(user_icon_path).resize((48, 48))
@@ -100,19 +98,24 @@ class AdminPage(tk.Frame):
     def show_user_menu(self, event):
         # Post the menu at the position of the event (click position)
         self.user_menu.post(event.x_root, event.y_root)
+
     def open_profile(self):
-        print("Profile page would be opened here.")
-    # You can add more functionality as needed to open the profile page
+        self.controller.switch_frame('MemberPage')    # You can add more functionality as needed to open the profile page
+
     def logout(self):
-        print("Profile page would be opened here.")
-    # You can add more functionality as needed to open the profile page
+        self.controller.set_logging_state(False)
+        self.controller.switch_frame('HomePage')   
+
+    def home(self):
+        self.controller.switch_frame('HomePage')    # You can add more functionality as needed to open the profile page
+
     def create_body(self):
         # Main body frame
         body_frame = tk.Frame(self, bg=self.styles.bg_color)
         body_frame.pack(fill='both', expand=True)
 
         # Admin Label
-        admin_label = tk.Label(body_frame, text="Administrateur", font=self.styles.large_font, bg=self.styles.bg_color)
+        admin_label = tk.Label(body_frame, text="Administrateur", font=self.styles.large_font)
         admin_label.pack(pady=(20, 10))
 
         # Profile Section
@@ -128,7 +131,7 @@ class AdminPage(tk.Frame):
         
         image_path = self.styles.resource_path('images/account.png')
         img = Image.open(image_path)
-        img.thumbnail((100, 100), Image.ANTIALIAS)
+        img.thumbnail((100, 100))
         photo_img = ImageTk.PhotoImage(img)
         profile_label = tk.Label(profile_frame, image=photo_img, bg=self.styles.bg_color)
         profile_label.image = photo_img  
