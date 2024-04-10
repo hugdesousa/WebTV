@@ -1,5 +1,7 @@
 import tkinter as tk
-from tkinter import ttk 
+from tkinter import ttk, scrolledtext
+
+import pyodbc
 from PIL import Image, ImageTk
 from styles import Styles
 import os
@@ -14,7 +16,7 @@ class AdminPage(tk.Frame):
 
     def build_ui(self):
         self.create_header()
-        separator = tk.Frame(self, height=40, bg=self.styles.bg_color)  
+        separator = tk.Frame(self, height=40, bg=self.styles.bg_color)
         separator.pack(fill='x')
         self.create_body()
     def create_header(self):
@@ -49,7 +51,7 @@ class AdminPage(tk.Frame):
     def create_search_bar(self, header):
         search_frame, search_bar = self.styles.create_rounded_entry(header, **self.styles.search_bar_style)
         search_frame.grid(row=0, column=3, padx=(0, 10), pady=10, sticky='e')
-      
+
         def on_focus_in(event):
             if search_bar.get() == "Rechercher":
                 search_bar.delete(0, tk.END)
@@ -105,7 +107,7 @@ class AdminPage(tk.Frame):
 
     def logout(self):
         self.controller.set_logging_state(False)
-        self.controller.switch_frame('HomePage')   
+        self.controller.switch_frame('HomePage')
 
     def home(self):
         self.controller.switch_frame('HomePage')    # You can add more functionality as needed to open the profile page
@@ -129,13 +131,13 @@ class AdminPage(tk.Frame):
         # Profile picture and Admin label
         profile_frame = tk.Frame(parent, bg=self.styles.bg_color)
         profile_frame.pack()
-        
+
         image_path = self.styles.resource_path('images/account.png')
         img = Image.open(image_path)
         img.thumbnail((100, 100))
         photo_img = ImageTk.PhotoImage(img)
         profile_label = tk.Label(profile_frame, image=photo_img, bg=self.styles.bg_color)
-        profile_label.image = photo_img  
+        profile_label.image = photo_img
         profile_label.pack(pady=10)
 
     def create_management_buttons(self, parent):
@@ -144,21 +146,79 @@ class AdminPage(tk.Frame):
         buttons_frame.pack()
 
         # Button Gérer Membre
-        btn_gerer_membre = ttk.Button(buttons_frame, text="Gérer Membre", style='TButton')
+        btn_gerer_membre = ttk.Button(buttons_frame, text="Gérer Membre", style='TButton', command=self.show_member_query_results)
         btn_gerer_membre.pack(fill='x', padx=50, pady=5)
 
         # Button Gérer Fichier
-        btn_gerer_fichier = ttk.Button(buttons_frame, text="Gérer Fichier", style='TButton')
+        btn_gerer_fichier = ttk.Button(buttons_frame, text="Gérer Fichier", style='TButton',
+                                       command=self.show_file_query_results)
         btn_gerer_fichier.pack(fill='x', padx=50, pady=5)
 
         # Button Gérer Thème
         btn_gerer_theme = ttk.Button(buttons_frame, text="Gérer Thème", style='TButton')
         btn_gerer_theme.pack(fill='x', padx=50, pady=5)
 
+    def show_member_query_results(self):
+        self._results_window("SELECT * FROM Membre")
+
+    def show_file_query_results(self):
+        self._results_window("""
+            SELECT 
+            T.Nom AS Nom_Theme,
+            COUNT(F.ThemeID) AS Nombre_Fichiers_Associés
+            FROM 
+            Theme T
+            LEFT JOIN 
+            Fichier F ON T.ThemeID = F.ThemeID
+            GROUP BY 
+             T.Nom
+            ORDER BY 
+            Nombre_Fichiers_Associés DESC;
+            """)
+
+    def _results_window(self, query):
+         # Create a new window for displaying query results
+        results_window = tk.Toplevel(self)
+        results_window.title("Résultats de la requête")
+
+            # Define a scrolled text widget to display the results
+        text_area = scrolledtext.ScrolledText(results_window, width=60, height=20, wrap=tk.WORD)
+        text_area.pack(padx=10, pady=10)
+
+        try:
+            server = 'localhost'
+            database = 'LDDProject'
+            username = 'SA'
+            password = 'Password123'
+
+            # Create connection string with Windows Authentication
+            conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+
+            # Establish connection
+            conn = pyodbc.connect(conn_str)
+            cursor = conn.cursor()
+
+            # Execute the SQL query
+            cursor.execute(query)
+
+            # Fetch the query results
+            results = cursor.fetchall()
+
+            # Close the database connection
+            conn.close()
+
+            # Display the results in the text area
+            for row in results:
+                text_area.insert(tk.END, f"{row}\n")
+
+        except Exception as e:
+            print("Erreur lors de l'exécution de la requête:", e)
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Administration")
-    styles = Styles()  
+    styles = Styles()
     admin_page = AdminPage(root, styles, controller=None)
     admin_page.pack(fill='both', expand=True)
     root.mainloop()
+
