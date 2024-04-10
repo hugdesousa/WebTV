@@ -76,7 +76,7 @@ FROM
 WHERE
     MVF.MEMBRE_ID IS NOT NULL;
 
---Sélection des thèmes avec le nombre total de fichiers associés à chaque thème (trie par ordre décroissant du nombre de fichiers) :
+--Sélection des thèmes avec le nombre total de fichiers associés à chaque thème (trie par ordre décroissant du nombre de fichiers) : fait !
 SELECT
     T.NOM            AS NOM_THEME,
     COUNT(F.THEMEID) AS NOMBRE_FICHIERS_ASSOCIÉS
