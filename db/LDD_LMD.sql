@@ -127,32 +127,32 @@ VALUES
 
 INSERT INTO Fichier (Fichier_ID, Type, Chemin, Description, DateUpload, ThemeID, MembreID)
 VALUES
-(1, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Beyonce.png', 'Beyonce ', '2024-01-15', 5, 1),
-(2, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Beyonce.mp4', 'Beyonce ', '2024-01-15', 5, 1),
-(3, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\JustinBieber.png', 'Justin Bieber', '2024-01-15', 5, 1),
-(4, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\JustinBieber.mp4', 'Justin Bieber', '2024-01-15', 5, 1),
-(5, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\KattyPerry.png', 'Katy Perry', '2024-01-15', 5, 1),
-(6, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\KattyPerry.mp4', 'Katy Perry', '2024-01-15', 5, 1),
-(7, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Rihana.png', 'Rihana', '2024-01-15', 5, 1),
-(8, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Rihana.mp4', 'Rihana', '2024-01-15', 5, 1),
+(1, 'png', '../src/images/Beyonce.png', 'Beyonce ', '2024-01-15', 5, 1),
+(2, 'mp4', '../src/images/Beyonce.mp4', 'Beyonce ', '2024-01-15', 5, 1),
+(3, 'png', '../src/images/JustinBieber.png', 'Justin Bieber', '2024-01-15', 5, 1),
+(4, 'mp4', '../src/images/JustinBieber.mp4', 'Justin Bieber', '2024-01-15', 5, 1),
+(5, 'png', '../src/images/KattyPerry.png', 'Katy Perry', '2024-01-15', 5, 1),
+(6, 'mp4', '../src/images/KattyPerry.mp4', 'Katy Perry', '2024-01-15', 5, 1),
+(7, 'png', '../src/images/Rihana.png', 'Rihana', '2024-01-15', 5, 1),
+(8, 'mp4', '../src/images/Rihana.mp4', 'Rihana', '2024-01-15', 5, 1),
     
-(9, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\chien.png', 'Chien', '2024-01-15', 3, 1),
-(10, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\chien.mp4', 'Chien', '2024-01-15', 3, 1),
-(11, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Bebe.png', 'Bebe', '2024-01-15', 3, 1),
-(12, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Bebe.mp4', 'Bebe', '2024-01-15', 3, 1),
-(13, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Laugh.png', 'Laugh', '2024-01-15', 3, 1),
-(14, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Laugh.mp4', 'Laugh', '2024-01-15', 3, 1),
-(15, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Fails.png', 'Fails', '2024-01-15', 3, 1),
-(16, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\Fails.mp4', 'Fails', '2024-01-15', 3, 1);
+(9, 'png', '../src/images/chien.png', 'Chien', '2024-01-15', 3, 1),
+(10, 'mp4', '../src/images/chien.mp4', 'Chien', '2024-01-15', 3, 1),
+(11, 'png', '../src/images/Bebe.png', 'Bebe', '2024-01-15', 3, 1),
+(12, 'mp4', '../src/images/Bebe.mp4', 'Bebe', '2024-01-15', 3, 1),
+(13, 'png', '../src/images/Laugh.png', 'Laugh', '2024-01-15', 3, 1),
+(14, 'mp4', '../src/images/Laugh.mp4', 'Laugh', '2024-01-15', 3, 1),
+(15, 'png', '../src/images/Fails.png', 'Fails', '2024-01-15', 3, 1),
+(16, 'mp4', '../src/images/Fails.mp4', 'Fails', '2024-01-15', 3, 1);
 
-(17, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News1.png', 'News1', '2024-01-15', 9, 1),
-(18, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News2.mp4', 'News2', '2024-01-15', 9, 1),
-(19, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News3.png', 'News3', '2024-01-15', 9, 1),
-(20, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News4.mp4', 'News4', '2024-01-15', 9, 1);
-(21, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News1.png', 'News1', '2024-01-15', 9, 1),
-(22, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News2.mp4', 'News2', '2024-01-15', 9, 1),
-(23, 'png', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News3.png', 'News3', '2024-01-15', 9, 1),
-(24, 'mp4', 'C:\Users\Aymen\Desktop\WebTV-main\WebTV-main\src\images\News4.mp4', 'News4', '2024-01-15', 9, 1);
+(17, 'png', '../src/images/News1.png', 'News1', '2024-01-15', 9, 1),
+(18, 'png', '../src/images/News2.png', 'News2', '2024-01-15', 9, 1),
+(19, 'png', '../src/images/News3.png', 'News3', '2024-01-15', 9, 1),
+(20, 'png', '../src/images/News4.png', 'News4', '2024-01-15', 9, 1);
+(21, 'mp4', '../src/images/News1.mp4', 'News1', '2024-01-15', 9, 1),
+(22, 'mp4', '../src/images/News2.mp4', 'News2', '2024-01-15', 9, 1),
+(23, 'png', '../src/images/News3.png', 'News3', '2024-01-15', 9, 1),
+(24, 'mp4', '../src/images/News4.mp4', 'News4', '2024-01-15', 9, 1);
 
 INSERT INTO MOTCLE (MotCleID, MotCle)
 VALUES
@@ -184,5 +184,15 @@ VALUES
 
 INSERT INTO MotsIndexFichier (MotCleID, Fichier_ID)
 VALUES
-(1, 1),
-(2, 2);
+(5, 1),
+(5, 3),
+(5, 5),
+(5, 7),
+(3, 9),
+(3, 11),
+(3, 13),
+(3, 15),
+(9, 5),
+(9, 7),
+(9, 9),
+(9, 11);
