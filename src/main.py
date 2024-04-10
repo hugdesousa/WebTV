@@ -19,7 +19,8 @@ class MainApp(tk.Tk):
             'SignupPage': SignupPage,
             'AdminPage': AdminPage,
             'MemberPage': MemberPage,
-            'InfoProfile': InfoProfile
+            'InfoProfile': InfoProfile,
+            'LikedCtgs': LikedCtgs
         }
 
         self.title("WebTV")
