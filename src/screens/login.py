@@ -1,6 +1,7 @@
 import tkinter as tk
-
+from tkinter import messagebox
 from PIL import Image, ImageTk
+import pyodbc
 
 class LoginPage(tk.Frame):
     def __init__(self, parent, styles, controller):
@@ -10,10 +11,10 @@ class LoginPage(tk.Frame):
         self.build_ui()
 
     def build_ui(self):
-        self.grid_columnconfigure(0, weight=1) 
-        self.grid_columnconfigure(3, weight=1) 
-        self.grid_rowconfigure(0, weight=1)   
-        self.grid_rowconfigure(6, weight=1)     
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(3, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(6, weight=1)
 
         # Load and resize the back button image
         back_image_path = "images/backtrack.png"
@@ -49,7 +50,7 @@ class LoginPage(tk.Frame):
 
         # Rounded button for "Login"
         login_button_canvas = self.styles.create_rounded_button(self, "Login", lambda: self.validate_login())
-        login_button_canvas.grid(row=4, column=1, columnspan=2, pady=(0,20))
+        login_button_canvas.grid(row=4, column=1, columnspan=2, pady=20)
 
         # Label for "pas de compte ?" with consistent background color
         no_account_label = tk.Label(self, text="Vous n'avez pas de compte?", **self.styles.base_style)
@@ -74,10 +75,35 @@ class LoginPage(tk.Frame):
             self.entry_password = entry_widget
 
     def validate_login(self):
-        username = self.entry_username.get()
-        password = self.entry_password.get()
-        if username == "" and password == "":
-            print("Login successful!")
-            self.controller.set_login_state(True)  # This updates the login state
-        else:
-            print("Login failed.")
+        input_username = self.entry_username.get().strip()
+        input_password = self.entry_password.get().strip()
+
+
+        server = 'localhost'
+        database = 'LDDProject'
+        username = 'SA'
+        password = 'Password123'
+
+        # Create connection string
+        conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+
+        try:
+            # Establish connection
+            conn = pyodbc.connect(conn_str)
+
+            cursor = conn.cursor()
+
+            # Corrected query to use the actual column names from your database schema
+            query = "SELECT * FROM Membre WHERE Pseudo = ? AND MotdePasse = ?"
+            cursor.execute(query, (input_username, input_password))
+
+            if cursor.fetchone():
+                print("Login successful!")
+                self.controller.switch_frame('HomePage')  # Assuming this is the method to switch to the HomePage
+            else:
+                messagebox.showerror("Data Error","Connexion echoue, Pseudo ou Utilisateur invalide")
+
+            conn.close()
+        except pyodbc.Error as e:
+            print("Error connecting to the database:", e)
+
