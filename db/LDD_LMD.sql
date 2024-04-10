@@ -143,12 +143,12 @@ VALUES
 (13, 'png', '../src/images/Laugh.png', 'Laugh', '2024-01-15', 3, 1),
 (14, 'mp4', '../src/images/Laugh.mp4', 'Laugh', '2024-01-15', 3, 1),
 (15, 'png', '../src/images/Fails.png', 'Fails', '2024-01-15', 3, 1),
-(16, 'mp4', '../src/images/Fails.mp4', 'Fails', '2024-01-15', 3, 1);
+(16, 'mp4', '../src/images/Fails.mp4', 'Fails', '2024-01-15', 3, 1),
 
 (17, 'png', '../src/images/News1.png', 'News1', '2024-01-15', 9, 1),
 (18, 'png', '../src/images/News2.png', 'News2', '2024-01-15', 9, 1),
 (19, 'png', '../src/images/News3.png', 'News3', '2024-01-15', 9, 1),
-(20, 'png', '../src/images/News4.png', 'News4', '2024-01-15', 9, 1);
+(20, 'png', '../src/images/News4.png', 'News4', '2024-01-15', 9, 1),
 (21, 'mp4', '../src/images/News1.mp4', 'News1', '2024-01-15', 9, 1),
 (22, 'mp4', '../src/images/News2.mp4', 'News2', '2024-01-15', 9, 1),
 (23, 'png', '../src/images/News3.png', 'News3', '2024-01-15', 9, 1),
