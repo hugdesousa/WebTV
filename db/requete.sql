@@ -88,3 +88,9 @@ GROUP BY
     T.NOM
 ORDER BY
     NOMBRE_FICHIERS_ASSOCIÉS DESC;
+
+--Permet de Trouver les videos de la mots cle
+SELECT F.Chemin,F.Description FROM Fichier F
+JOIN MotsIndexFichier MIF ON F.Fichier_ID = MIF.Fichier_ID
+JOIN MOTCLE MK ON MIF.MotCleID = MK.MotCleID
+WHERE MK.MotCle LIKE '%Musique%'
